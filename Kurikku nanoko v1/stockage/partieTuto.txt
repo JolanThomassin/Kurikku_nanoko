@@ -1,0 +1,62 @@
+	def LancerTuto(self):
+		### Reset ###
+		self.CanvaUn.delete(ALL)
+
+		### Images ###
+		self.imageLoliBoss = PhotoImage(file="loliBoss.png")
+		self.CanvaUn.create_image(200, 380, image=self.imageLoliBoss)
+
+		### Textes ###
+		self.convLoliBoss1 = self.CanvaUn.create_text(633, 203, text= "Heyo~", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss1double = self.CanvaUn.create_text(630, 200, text= "Heyo~", font=("OCR A Extended", 30), fill="#AE0D1E")
+
+		### Boutons ###
+		self.boutonContinuerConv = Button(self.EcranDeJeux, text="  Oui ?  ", font=("OCR A Extended", 20), bg='white', fg='black', command=self.TutoUn)
+		self.boutonContinuerConv = self.CanvaUn.create_window(970, 670, window=self.boutonContinuerConv)
+
+	def TutoUn(self):
+		### Textes ###
+		self.CanvaUn.itemconfigure(self.convLoliBoss1, text="Alors, on tente")
+		self.CanvaUn.itemconfigure(self.convLoliBoss1double, text="Alors, on tente")
+		self.convLoliBoss2 = self.CanvaUn.create_text(633, 303, text= "l'aventure ?", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss2double = self.CanvaUn.create_text(630, 300, text= "l'aventure ?", font=("OCR A Extended", 30), fill="#AE0D1E")
+
+		### Boutons ###
+		self.CanvaUn.delete(self.boutonContinuerConv)
+		self.boutonContinuerConv = Button(self.EcranDeJeux, text="  Quel aventure ?  ", font=("OCR A Extended", 20), bg='white', fg='black', command=self.TutoDeux)
+		self.boutonContinuerConv = self.CanvaUn.create_window(880, 670, window=self.boutonContinuerConv)
+
+	def TutoDeux(self):
+		### Textes ###
+		self.CanvaUn.itemconfigure(self.convLoliBoss1, text="Ne fais pas l'ignorant")
+		self.CanvaUn.itemconfigure(self.convLoliBoss1double, text="Ne fais pas l'ignorant")
+		self.CanvaUn.itemconfigure(self.convLoliBoss2, text="Allez vien dans ton bureau")
+		self.CanvaUn.itemconfigure(self.convLoliBoss2double, text="Allez vien dans ton bureau")
+
+		### Boutons ###
+		self.CanvaUn.delete(self.boutonContinuerConv)
+		self.boutonContinuerConv = Button(self.EcranDeJeux, text="  Entrer dans le bureau  ", font=("OCR A Extended", 20), bg='white', fg='black', command=self.TutoTrois)
+		self.boutonContinuerConv = self.CanvaUn.create_window(840, 670, window=self.boutonContinuerConv)
+
+	def TutoTrois(self):
+		### Reset ###
+		self.CanvaUn.delete(ALL)
+
+		### Images ###
+		self.bureauPrincipal = PhotoImage(file="bureau.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.bureauPrincipal)
+		self.imageLoliBoss = PhotoImage(file="loliBoss.png")
+		self.CanvaUn.create_image(200, 380, image=self.imageLoliBoss)
+
+		### Textes ###
+		self.convLoliBoss1 = self.CanvaUn.create_text(633, 203, text= "Je vais te laisser,", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss1double = self.CanvaUn.create_text(630, 200, text= "Je vais te laisser,", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss2 = self.CanvaUn.create_text(633, 303, text= "bonne chance pour faire du bénéfice !", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss2double = self.CanvaUn.create_text(630, 300, text= "bonne chance pour faire du bénéfice !", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss3 = self.CanvaUn.create_text(633, 403, text= "Je vois beaucoup d'espoir en toi.", font=("OCR A Extended", 30), fill="#AE0D1E")
+		self.convLoliBoss3double = self.CanvaUn.create_text(630, 400, text= "Je vois beaucoup d'espoir en toi.", font=("OCR A Extended", 30), fill="#AE0D1E")
+
+		### Boutons ###
+		self.CanvaUn.delete(self.boutonContinuerConv)
+		self.boutonContinuerConv = Button(self.EcranDeJeux, text="  D'a..d'accord.  ", font=("OCR A Extended", 20), bg='white', fg='black', command=self.FenetrePrincipale)
+		self.boutonContinuerConv = self.CanvaUn.create_window(840, 670, window=self.boutonContinuerConv)

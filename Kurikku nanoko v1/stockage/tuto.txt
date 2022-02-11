@@ -1,0 +1,8 @@
+cd desktop
+cd jeux innovant de fou - Copie
+pyinstaller --onefile -w NomDuJeu.py
+
+supprimer le .spec
+supprimer le dossier build
+glisser l'apli de dist dans le dossier mère
+supprimer dist

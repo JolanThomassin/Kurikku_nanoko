@@ -1,0 +1,26 @@
+0
+0
+0
+0
+False
+1
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+False
+5000
+Ligne 24
+Ligne 25
+Ligne 26
