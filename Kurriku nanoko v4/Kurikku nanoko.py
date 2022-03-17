@@ -30,6 +30,15 @@ class Jeux() :
 
 		### Waifu ###
 		self.nombreWaifu = 0
+		self.imageRessource = PhotoImage(file="boutonBoutique/boutonRessource.png")
+		self.imageWaifu = PhotoImage(file="boutonBoutique/boutonWaifu.png")
+		self.imageCaisse = PhotoImage(file="boutonBoutique/boutonCaisse.png")
+		self.imageCollection = PhotoImage(file="boutonBoutique/boutonCollection.png")
+		self.imageStats = PhotoImage(file="boutonBoutique/boutonStats.png")
+		self.imageQuête = PhotoImage(file="boutonBoutique/boutonQuête.png")
+		self.imageCode = PhotoImage(file="boutonBoutique/boutonCode.png")
+		self.imageCode = PhotoImage(file="boutonBoutique/boutonCode.png")
+		self.imageMilitaire = PhotoImage(file="boutonBoutique/boutonMilitaire.png")
 				
 		### Waifu un ###
 		self.imageWaifuUnNoir = PhotoImage(file="waifu/waifuUnPetitNoir.png")
@@ -117,14 +126,6 @@ class Jeux() :
 		### Images ###
 		self.BackgroundDécor = PhotoImage(file="salle/salleAccueil.png")
 		self.CanvaUn.create_image(540, 360, image=self.BackgroundDécor)
-		self.imageRessource = PhotoImage(file="boutonBoutique/boutonRessource.png")
-		self.imageWaifu = PhotoImage(file="boutonBoutique/boutonWaifu.png")
-		self.imageCaisse = PhotoImage(file="boutonBoutique/boutonCaisse.png")
-		self.imageCollection = PhotoImage(file="boutonBoutique/boutonCollection.png")
-		self.imageStats = PhotoImage(file="boutonBoutique/boutonStats.png")
-		self.imageQuête = PhotoImage(file="boutonBoutique/boutonQuête.png")
-		self.imageCode = PhotoImage(file="boutonBoutique/boutonCode.png")
-		self.imageSucces = PhotoImage(file="boutonBoutique/boutonSucces.png")
 
 		### Textes ###
 		self.texteDébut = self.CanvaUn.create_text(545, 155, text= "Kurikku nanoko", font=("OCR A Extended", 50), fill="#AE0D1E")
@@ -576,7 +577,7 @@ class Jeux() :
 		### Boutons ###
 		self.boutonDeGauche = Button(self.EcranDeJeux, image=self.imageQuête, command=self.pageQuête, borderwidth=0)
 		self.boutonDeGauche = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2, window=self.boutonDeGauche)
-		self.boutonDeDroite = Button(self.EcranDeJeux, image=self.imageSucces, command=self.pageMillitaire, borderwidth=0)
+		self.boutonDeDroite = Button(self.EcranDeJeux, image=self.imageMilitaire, command=self.pageMillitaire, borderwidth=0)
 		self.boutonDeDroite = self.CanvaUn.create_window(self.LargeurEcran/2+250, self.HauteurEcran/2, window=self.boutonDeDroite)
 
 		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.MenuBoutique)
