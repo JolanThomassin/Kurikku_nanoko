@@ -21,8 +21,8 @@ Et on peut également choisir les personnages de notre équipe #1 #2
 Pour augmenter la puissance des personnages il faut aller dans la page du personnage et cliquer sur "prochain niveau" #2 #3
 ![image](https://user-images.githubusercontent.com/98430140/158852454-d6231fa3-d8a1-406f-bac1-eb0b044f8f9c.png)
 
-
-
+J'ai ensuite ajouté une fenêtre pour l'attaque #5
+![image](https://user-images.githubusercontent.com/98430140/159138142-b775f1be-353a-4666-8bd6-68787b979c2e.png)
 
 ## Partie quête/histoire
 
