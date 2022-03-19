@@ -19,8 +19,7 @@ class Jeux() :
 		self.InGame = False
 		self.argent = 500000
 		self.argentTotal = 0
-		self.bonusWaifuDeux = 1
-
+		
 		### Prix ###
 		self.weeb = 0
 		self.prixWeeb = 5
@@ -49,15 +48,24 @@ class Jeux() :
 		self.imageWaifuDeuxNoir = PhotoImage(file="waifu/waifuDeuxPetitNoir.png")
 		self.imageWaifuDeuxColor = PhotoImage(file="waifu/waifuDeuxPetitColor.png")
 		self.waifuDeux = False
+		self.bonusWaifuDeux = 1
+		self.waifuDeuxNiveau = 1
+		self.waifuDeuxPrixNiveau = 10000
 
 		### Waifu code ###
 		self.imageWaifuCodeNoir = PhotoImage(file="waifu/waifuCodePetitNoir.png")
 		self.imageWaifuCodeColor = PhotoImage(file="waifu/waifuCodePetitColor.png")
 		self.waifuCode = False
+		self.waifuCodeNiveau = 1
+		self.waifuCodePrixNiveau = 2500
 
 		### Millitaire ###
 		self.waifuUnPuissance = 100
 		self.waifuUnEquipé = False
+		self.waifuDeuxPuissance = 200
+		self.waifuDeuxEquipé = False
+		self.waifuCodePuissance = 150
+		self.waifuCodeEquipé = False
 		self.manche = 0
 		self.puissanceEnnemi = 500
 		self.puissanceAllié = 500
@@ -1040,6 +1048,16 @@ class Jeux() :
 		### Reset ###
 		self.CanvaUn.delete(ALL)
 
+		### Fonctions ###
+		def levelUp() :
+			if self.argent >= self.waifuDeuxPrixNiveau :
+				self.argent -= self.waifuDeuxPrixNiveau
+				self.waifuDeuxNiveau += 1
+				self.waifuDeuxPuissance = self.waifuDeuxPuissance * 2
+				self.waifuDeuxPrixNiveau = self.waifuDeuxPrixNiveau + int(self.waifuDeuxPrixNiveau/2)
+				self.bonusWaifuDeux = self.bonusWaifuDeux * 2
+				self.pageWaifuDeux()
+
 		### Images ###
 		self.bureauPrincipal = PhotoImage(file="salle/pageWaifu.png")
 		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.bureauPrincipal)
@@ -1054,16 +1072,20 @@ class Jeux() :
 		else :
 			self.boutonWaifuUn = Button(self.EcranDeJeux, image=self.imageWaifuDeuxColor, command=None, borderwidth=0)
 			self.boutonWaifuUn = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2, window=self.boutonWaifuUn)
+			self.boutonLevelUp = Button(self.EcranDeJeux, text="Prochain niveau : " + str(self.waifuDeuxPrixNiveau) + "€", font=("OCR A Extended", 20), bg='white', fg='black', command=levelUp)
+			self.boutonLevelUp = self.CanvaUn.create_window((self.LargeurEcran/2)+220, (self.HauteurEcran/2)+50, window=self.boutonLevelUp)
+			self.descriptionWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+220, (self.HauteurEcran/2), text= "Niveau : " + str(self.waifuDeuxNiveau), font=("OCR A Extended", 30), fill="white")
+			self.descriptionWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+220+3, (self.HauteurEcran/2)+3, text= "Niveau : " + str(self.waifuDeuxNiveau), font=("OCR A Extended", 30), fill="black")
 		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageWaifuUn)
 		self.boutonGauche = self.CanvaUn.create_window(self.LargeurEcran/2-500, self.HauteurEcran/2, window=self.boutonGauche)
 		self.boutonDroite = Button(self.EcranDeJeux, text="→", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageWaifuCode)
 		self.boutonDroite = self.CanvaUn.create_window(self.LargeurEcran/2+500, self.HauteurEcran/2, window=self.boutonDroite)
 
 		### Textes ###
-		self.texteNomWaifuDouble = self.CanvaUn.create_text((self.LargeurEcran/2)+233, (self.HauteurEcran/2)-200, text= "???", font=("OCR A Extended", 30), fill="white")
-		self.texteNomWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+230, (self.HauteurEcran/2)-203, text= "???", font=("OCR A Extended", 30), fill="black")
-		self.descriptionWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+223, (self.HauteurEcran/2)-103, text= "Augmentera le rendement\n     de vos weebs (x2)", font=("OCR A Extended", 30), fill="white")
-		self.descriptionWaifuDouble = self.CanvaUn.create_text((self.LargeurEcran/2)+220, (self.HauteurEcran/2)-100, text= "Augmentera le rendement\n     de vos weebs (x2)", font=("OCR A Extended", 30), fill="black")
+		self.texteNomWaifuDouble = self.CanvaUn.create_text((self.LargeurEcran/2)+233, (self.HauteurEcran/2)-200, text= "Elo", font=("OCR A Extended", 30), fill="white")
+		self.texteNomWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+230, (self.HauteurEcran/2)-203, text= "Elo", font=("OCR A Extended", 30), fill="black")
+		self.descriptionWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+223, (self.HauteurEcran/2)-103, text= "Augmentera le rendement\n     de vos weebs", font=("OCR A Extended", 30), fill="white")
+		self.descriptionWaifuDouble = self.CanvaUn.create_text((self.LargeurEcran/2)+220, (self.HauteurEcran/2)-100, text= "Augmentera le rendement\n     de vos weebs", font=("OCR A Extended", 30), fill="black")
 		if self.waifuDeux == False :
 			self.prixWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+233, (self.HauteurEcran/2)+203, text= "Prix : 5.000 €", font=("OCR A Extended", 30), fill="white")
 			self.prixWaifuDouuble = self.CanvaUn.create_text((self.LargeurEcran/2)+230, (self.HauteurEcran/2)+200, text= "Prix : 5.000 €", font=("OCR A Extended", 30), fill="black")
@@ -1072,6 +1094,15 @@ class Jeux() :
 	def pageWaifuCode(self):
 		### Reset ###
 		self.CanvaUn.delete(ALL)
+
+		### Fonctions ###
+		def levelUp() :
+			if self.argent >= self.waifuCodePrixNiveau :
+				self.argent -= self.waifuCodePrixNiveau
+				self.waifuCodeNiveau += 1
+				self.waifuCodePuissance = self.waifuCodePuissance * 2
+				self.waifuCodePrixNiveau = self.waifuCodePrixNiveau + int(self.waifuCodePrixNiveau/2)
+				self.pageWaifuCode()
 
 		### Images ###
 		self.bureauPrincipal = PhotoImage(file="salle/pageWaifu.png")
@@ -1088,6 +1119,10 @@ class Jeux() :
 		else :
 			self.boutonWaifuCode = Button(self.EcranDeJeux, image=self.imageWaifuCodeColor, command=None, borderwidth=0)
 			self.boutonWaifuCode = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2, window=self.boutonWaifuCode)
+			self.boutonLevelUp = Button(self.EcranDeJeux, text="Prochain niveau : " + str(self.waifuCodePrixNiveau) + "€", font=("OCR A Extended", 20), bg='white', fg='black', command=levelUp)
+			self.boutonLevelUp = self.CanvaUn.create_window((self.LargeurEcran/2)+220, (self.HauteurEcran/2)+50, window=self.boutonLevelUp)
+			self.descriptionWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+220, (self.HauteurEcran/2), text= "Niveau : " + str(self.waifuCodeNiveau), font=("OCR A Extended", 30), fill="white")
+			self.descriptionWaifu = self.CanvaUn.create_text((self.LargeurEcran/2)+220+3, (self.HauteurEcran/2)+3, text= "Niveau : " + str(self.waifuCodeNiveau), font=("OCR A Extended", 30), fill="black")
 		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageWaifuDeux)
 		self.boutonGauche = self.CanvaUn.create_window(self.LargeurEcran/2-500, self.HauteurEcran/2, window=self.boutonGauche)
 		self.boutonDroite = Button(self.EcranDeJeux, text="→", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageWaifuUn)
@@ -1368,6 +1403,10 @@ class Jeux() :
 			valeur = 0
 			if self.waifuUnEquipé == True :
 				valeur += self.waifuUnPuissance
+			if self.waifuDeuxEquipé == True :
+				valeur += self.waifuDeuxPuissance
+			if self.waifuCodeEquipé == True :
+				valeur += self.waifuCodePuissance
 			self.puissanceAllié = valeur
 
 		### Textes ###
@@ -1412,9 +1451,9 @@ class Jeux() :
 			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuUnNoir, command=None, borderwidth=2, highlightcolor="red",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
 			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
 
-		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeUne)
+		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeTrois)
 		self.boutonGauche = self.CanvaUn.create_window(self.LargeurEcran/2-500, self.HauteurEcran/2, window=self.boutonGauche)
-		self.boutonDroite = Button(self.EcranDeJeux, text="→", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeUne)
+		self.boutonDroite = Button(self.EcranDeJeux, text="→", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeDeux)
 		self.boutonDroite = self.CanvaUn.create_window(self.LargeurEcran/2+500, self.HauteurEcran/2, window=self.boutonDroite)
 		
 		### Textes ###
@@ -1427,12 +1466,103 @@ class Jeux() :
 		self.puissanceWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-50, text= "Puissance : " + str(self.waifuUnPuissance), font=("OCR A Extended", 30), fill="white")
 		self.puissanceWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-50+3, text= "Puissance : " + str(self.waifuUnPuissance), font=("OCR A Extended", 30), fill="grey")
 
+	def pageGestionEquipeDeux(self) :
+		self.CanvaUn.delete(ALL)
+
+		### Image ###
+		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
+
+		### Fonctions ###
+		def EquipementWaifu() :
+			if self.waifuDeuxEquipé == False :
+				self.waifuDeuxEquipé = True
+			else :
+				self.waifuDeuxEquipé = False
+			self.pageGestionEquipeDeux()
+
+		### Boutons ###
+		self.boutonRetour = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
+		self.boutonRetour = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+300, window=self.boutonRetour)
+
+		if (self.waifuDeux == True) and (self.waifuDeuxEquipé == True) :
+			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuDeuxColor, command=EquipementWaifu, borderwidth=2, highlightcolor="green",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
+			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
+		elif (self.waifuDeux == True) and (self.waifuDeuxEquipé == False):		
+			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuDeuxColor, command=EquipementWaifu, borderwidth=2, highlightcolor="red",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
+			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
+		else :
+			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuDeuxNoir, command=None, borderwidth=2, highlightcolor="red",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
+			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
+
+		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeUne)
+		self.boutonGauche = self.CanvaUn.create_window(self.LargeurEcran/2-500, self.HauteurEcran/2, window=self.boutonGauche)
+		self.boutonDroite = Button(self.EcranDeJeux, text="→", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeTrois)
+		self.boutonDroite = self.CanvaUn.create_window(self.LargeurEcran/2+500, self.HauteurEcran/2, window=self.boutonDroite)
+		
+		### Textes ###
+		self.nomWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-250, text= "Lyne", font=("OCR A Extended", 60), fill="white")
+		self.nomWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-250+3, text= "Lyne", font=("OCR A Extended", 60), fill="grey")
+		self.equipeWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-150, text= "Équipé : " + str(self.waifuDeuxEquipé), font=("OCR A Extended", 30), fill="white")
+		self.equipeWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-150+3, text= "Équipé : " + str(self.waifuDeuxEquipé), font=("OCR A Extended", 30), fill="grey")
+		self.niveauWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-100, text= "Niveau : " + str(self.waifuDeuxNiveau), font=("OCR A Extended", 30), fill="white")
+		self.niveauWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-100+3, text= "Niveau : " + str(self.waifuDeuxNiveau), font=("OCR A Extended", 30), fill="grey")
+		self.puissanceWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-50, text= "Puissance : " + str(self.waifuDeuxPuissance), font=("OCR A Extended", 30), fill="white")
+		self.puissanceWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-50+3, text= "Puissance : " + str(self.waifuDeuxPuissance), font=("OCR A Extended", 30), fill="grey")
+
+	def pageGestionEquipeTrois(self) :
+		self.CanvaUn.delete(ALL)
+
+		### Image ###
+		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
+
+		### Fonctions ###
+		def EquipementWaifu() :
+			if self.waifuCodeEquipé == False :
+				self.waifuCodeEquipé = True
+			else :
+				self.waifuCodeEquipé = False
+			self.pageGestionEquipeTrois()
+
+		### Boutons ###
+		self.boutonRetour = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
+		self.boutonRetour = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+300, window=self.boutonRetour)
+
+		if (self.waifuCode == True) and (self.waifuCodeEquipé == True) :
+			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuCodeColor, command=EquipementWaifu, borderwidth=2, highlightcolor="green",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
+			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
+		elif (self.waifuCode == True) and (self.waifuCodeEquipé == False):		
+			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuCodeColor, command=EquipementWaifu, borderwidth=2, highlightcolor="red",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
+			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
+		else :
+			self.boutonWaifu = Button(self.EcranDeJeux, image=self.imageWaifuCodeNoir, command=None, borderwidth=2, highlightcolor="red",highlightbackground="grey",highlightthickness=5,relief=SOLID, default='active')
+			self.boutonWaifu = self.CanvaUn.create_window(self.LargeurEcran/2-250, self.HauteurEcran/2-25, window=self.boutonWaifu)
+
+		self.boutonGauche = Button(self.EcranDeJeux, text="←", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeDeux)
+		self.boutonGauche = self.CanvaUn.create_window(self.LargeurEcran/2-500, self.HauteurEcran/2, window=self.boutonGauche)
+		self.boutonDroite = Button(self.EcranDeJeux, text="→", font=("OCR A Extended", 20), bg='white', fg='black', command=self.pageGestionEquipeUne)
+		self.boutonDroite = self.CanvaUn.create_window(self.LargeurEcran/2+500, self.HauteurEcran/2, window=self.boutonDroite)
+		
+		### Textes ###
+		self.nomWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-250, text= "Lyne", font=("OCR A Extended", 60), fill="white")
+		self.nomWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-250+3, text= "Lyne", font=("OCR A Extended", 60), fill="grey")
+		self.equipeWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-150, text= "Équipé : " + str(self.waifuCodeEquipé), font=("OCR A Extended", 30), fill="white")
+		self.equipeWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-150+3, text= "Équipé : " + str(self.waifuCodeEquipé), font=("OCR A Extended", 30), fill="grey")
+		self.niveauWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-100, text= "Niveau : " + str(self.waifuCodeNiveau), font=("OCR A Extended", 30), fill="white")
+		self.niveauWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-100+3, text= "Niveau : " + str(self.waifuCodeNiveau), font=("OCR A Extended", 30), fill="grey")
+		self.puissanceWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-50, text= "Puissance : " + str(self.waifuCodePuissance), font=("OCR A Extended", 30), fill="white")
+		self.puissanceWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-50+3, text= "Puissance : " + str(self.waifuCodePuissance), font=("OCR A Extended", 30), fill="grey")
+
 	def pageAttaque(self) :
 		self.CanvaUn.delete(ALL)
 
 		### Image ###
 		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
 		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
+
+		self.facteurAllié = 5
+		self.facteurEnnemi = 15
 
 		### Fonctions ###
 		finCampagneMillitaire = False
@@ -1520,7 +1650,7 @@ class Jeux() :
 			elif valeurAleatoire > 8 :
 				self.puissanceEnnemi += self.facteurEnnemi
 			else :
-				self.facteurEnnemi = self.facteurEnnemi + int(self.facteurEnnemi/2)
+				self.facteurEnnemi = self.facteurEnnemi + int(self.facteurEnnemi/4)
 			vérificationVivant()
 			self.créationAttaque()
 			
@@ -1588,7 +1718,6 @@ class Jeux() :
 		### Boutons ###
 		self.retourPageMillitaire = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
 		self.retourPageMillitaire = self.CanvaUn.create_window(self.LargeurEcran/2+(self.LargeurEcran/2/2), self.HauteurEcran/2+150, window=self.retourPageMillitaire)
-
 
 jeux = Jeux()
 jeux 
