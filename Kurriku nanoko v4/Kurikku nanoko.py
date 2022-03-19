@@ -15,9 +15,6 @@ class Jeux() :
 		self.CanvaUn = Canvas(self.EcranDeJeux, width=self.LargeurEcran, height=self.HauteurEcran, bg="black")
 		self.CanvaUn.pack()
 
-		### Démarrage ###
-		self.MenuAccueil()
-
 		### Variables ###
 		self.InGame = False
 		self.argent = 500000
@@ -43,7 +40,7 @@ class Jeux() :
 		### Waifu un ###
 		self.imageWaifuUnNoir = PhotoImage(file="waifu/waifuUnPetitNoir.png")
 		self.imageWaifuUnColor = PhotoImage(file="waifu/waifuUnPetitColor.png")
-		self.waifuUn = False
+		self.waifuUn = True
 		self.puissanceClique = 1
 		self.waifuUnNiveau = 1
 		self.waifuUnPrixNiveau = 5000
@@ -61,8 +58,11 @@ class Jeux() :
 		### Millitaire ###
 		self.waifuUnPuissance = 100
 		self.waifuUnEquipé = False
-		self.manche = 1
-		self.puissanceEnnemi = 100
+		self.manche = 0
+		self.puissanceEnnemi = 500
+		self.puissanceAllié = 500
+		self.facteurAllié = 5
+		self.facteurEnnemi = 15
 
 		### Cosmétique ###
 		self.LunetteCommunPossession = False
@@ -117,6 +117,9 @@ class Jeux() :
 		"Yeux rouge", "Yeux rouge", "Yeux rouge", "Yeux rouge", "Yeux rouge", "Yeux rouge", "Shiba", "Shiba", "Shiba", "Shiba", 
 		"Shiba", "Shiba", "Shiba", "Shiba", "Shiba", "Shiba", "Shiba", "Shiba", "Shiba", "Shiba", 
 		"Tail", "Tail", "Tail", "Tail", "Tail", "Tail", "Tail", "Tail", "Tail", "Légendaire"]
+
+		### Démarrage ###
+		self.MenuAccueil()
 
 		### Lancement ###
 		self.FonctionTimer()
@@ -995,7 +998,7 @@ class Jeux() :
 				self.argent -= self.waifuUnPrixNiveau
 				self.waifuUnNiveau += 1
 				self.waifuUnPuissance = self.waifuUnPuissance * 2
-				self.waifuUnPrixNiveau = self.waifuUnPrixNiveau + int(self.waifuUnPrixNiveau/6)
+				self.waifuUnPrixNiveau = self.waifuUnPrixNiveau + int(self.waifuUnPrixNiveau/2)
 				self.puissanceClique = self.puissanceClique * 2
 				self.pageWaifuUn()
 
@@ -1365,11 +1368,12 @@ class Jeux() :
 			valeur = 0
 			if self.waifuUnEquipé == True :
 				valeur += self.waifuUnPuissance
-			return valeur
+			self.puissanceAllié = valeur
 
 		### Textes ###
-		self.puissanceTotale = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Puissance : " + str(calculPuissance()), font=("OCR A Extended", 47), fill="white")
-		self.puissanceTotaleDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-300+3, text= "Puissance : " + str(calculPuissance()), font=("OCR A Extended", 47), fill="grey")
+		calculPuissance()
+		self.puissanceTotale = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Puissance : " + str(self.puissanceAllié), font=("OCR A Extended", 47), fill="white")
+		self.puissanceTotaleDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-300+3, text= "Puissance : " + str(self.puissanceAllié), font=("OCR A Extended", 47), fill="grey")
 
 		### Boutons ###
 		self.premierBouton = Button(self.EcranDeJeux, text="Attaquer", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageAttaque, width=20)
@@ -1426,33 +1430,164 @@ class Jeux() :
 	def pageAttaque(self) :
 		self.CanvaUn.delete(ALL)
 
-
-
 		### Image ###
 		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
 		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
 
-
 		### Fonctions ###
-		def calculPuissance() :
-			valeur = 0
-			if self.waifuUnEquipé == True :
-				valeur += self.waifuUnPuissance
-			return valeur
+		finCampagneMillitaire = False
+		if self.manche == 0 :
+			self.puissanceEnnemi = 100
+		elif self.manche == 1 :
+			self.puissanceEnnemi = 500
+		elif self.manche == 2 :
+			self.puissanceEnnemi = 1000
+		elif self.manche == 3 :
+			self.puissanceEnnemi = 5000
+		elif self.manche == 4 :
+			self.puissanceEnnemi = 10000
+		elif self.manche == 5 :
+			self.puissanceEnnemi = 30000
+		elif self.manche == 6 :
+			finCampagneMillitaire = True
 
-		### Textes ###
-		self.puissanceTotale = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Puissance : " + str(calculPuissance()), font=("OCR A Extended", 47), fill="white")
-		self.puissanceTotaleDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-300+3, text= "Puissance : " + str(calculPuissance()), font=("OCR A Extended", 47), fill="grey")
-		self.mancheActuelle = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-100, text= "Manche : " + str(self.manche), font=("OCR A Extended", 47), fill="white")
-		self.mancheActuelleDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-100+3, text= "Manche : " + str(self.manche), font=("OCR A Extended", 47), fill="red")
-		self.puissanceEnnemiTexte = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2, text= "Puissance ennemi : " + str(self.puissanceEnnemi), font=("OCR A Extended", 47), fill="white")
-		self.puissanceEnnemiDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+3, text= "Puissance ennemi : " + str(self.puissanceEnnemi), font=("OCR A Extended", 47), fill="red")
+		if finCampagneMillitaire == False :
+			### Textes ###
+			self.puissanceTotale = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Puissance : " + str(self.puissanceAllié), font=("OCR A Extended", 47), fill="white")
+			self.puissanceTotaleDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-300+3, text= "Puissance : " + str(self.puissanceAllié), font=("OCR A Extended", 47), fill="grey")
+			self.mancheActuelle = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-100, text= "Manche : " + str(self.manche), font=("OCR A Extended", 47), fill="white")
+			self.mancheActuelleDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-100+3, text= "Manche : " + str(self.manche), font=("OCR A Extended", 47), fill="red")
+			self.puissanceEnnemiTexte = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2, text= "Puissance ennemi : " + str(self.puissanceEnnemi), font=("OCR A Extended", 47), fill="white")
+			self.puissanceEnnemiDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+3, text= "Puissance ennemi : " + str(self.puissanceEnnemi), font=("OCR A Extended", 47), fill="red")
+
+			### Boutons ###
+			self.boutonAttaque = Button(self.EcranDeJeux, text="Attaque", font=("OCR A Extended", 25), bg='white', fg='black', command=self.créationAttaque, width=20)
+			self.boutonAttaque = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+200, window=self.boutonAttaque)
+		else :
+			### Textes ###
+			self.puissanceEnnemiTexte = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2, text= "Vous avez finis la campagne", font=("OCR A Extended", 47), fill="white")
+			self.puissanceEnnemiDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+3, text= "Vous avez finis la campagne", font=("OCR A Extended", 47), fill="red")
 
 		### Boutons ###
-		self.boutonAttaque = Button(self.EcranDeJeux, text="Attaque", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
-		self.boutonAttaque = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+200, window=self.boutonAttaque)
 		self.boutonRetour = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
 		self.boutonRetour = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+300, window=self.boutonRetour)
+
+	def créationAttaque(self) :
+		self.CanvaUn.delete(ALL)
+
+		### Image ###
+		self.backgroundMillitaire = PhotoImage(file="salle/pageAttaque.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
+
+		### Fonctions ###
+		def couleurTexte() :
+			if self.puissanceAllié > self.puissanceEnnemi :
+				cA = "lime"
+				cM = "red"
+			elif self.puissanceAllié == self.puissanceEnnemi :
+				cA = "white"
+				cM = "white"
+			else :
+				cA = "red"
+				cM = "lime"
+			return(cM,cA)
+
+		def vérificationVivant() :
+			if self.puissanceAllié <= 0 :
+				self.pageDéfaite()
+			elif self.puissanceEnnemi <= 0 :
+				self.pageVictoire()
+			elif (self.puissanceAllié <= 0) and (self.puissanceEnnemi <= 0) :
+				self.pageVictoire()
+
+		def boutonAttaqueFct() :
+			self.puissanceEnnemi -= self.facteurAllié
+			tourEnnemi()
+			vérificationVivant()
+		def boutonHealFct() :
+			self.puissanceAllié += self.facteurAllié
+			tourEnnemi()
+			vérificationVivant()
+		def boutonUpgradeFct() :
+			self.facteurAllié = self.facteurAllié + int(self.facteurAllié/4)
+			tourEnnemi()
+			vérificationVivant()
+
+		def tourEnnemi() :
+			valeurAleatoire = random.randint(0, 9)
+			if valeurAleatoire <= 5 :
+				self.puissanceAllié -= self.facteurEnnemi
+			elif valeurAleatoire > 8 :
+				self.puissanceEnnemi += self.facteurEnnemi
+			else :
+				self.facteurEnnemi = self.facteurEnnemi + int(self.facteurEnnemi/2)
+			vérificationVivant()
+			self.créationAttaque()
+			
+		### Textes ###
+		couleur = couleurTexte()
+		self.puissanceEnnemiTexte = self.CanvaUn.create_text(self.LargeurEcran/2-150, self.HauteurEcran/2-275, text= "Puissance ennemi : ", font=("OCR A Extended", 47), fill="black")
+		self.puissanceEnnemiTexteDeux = self.CanvaUn.create_text(self.LargeurEcran/2-150+3, self.HauteurEcran/2-275+3, text= "Puissance ennemi : ", font=("OCR A Extended", 47), fill=couleur[0])
+		self.puissanceEnnemiValeur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-175, text=self.puissanceEnnemi, font=("OCR A Extended", 47), fill="black")
+		self.puissanceEnnemiValeurDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-175+3, text=self.puissanceEnnemi, font=("OCR A Extended", 47), fill=couleur[0])
+		self.puissanceEnnemiModificateur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-100, text="Modificateur : " + str(self.facteurEnnemi), font=("OCR A Extended", 47), fill="black")
+		self.puissanceEnnemiModificateurDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-100+3, text="Modificateur : " + str(self.facteurEnnemi), font=("OCR A Extended", 47), fill=couleur[0])
+	
+		self.puissanceAlliéTexte = self.CanvaUn.create_text(self.LargeurEcran/2-150, self.HauteurEcran/2, text= "Votre puissance : ", font=("OCR A Extended", 47), fill="black")
+		self.puissanceAlliéTexteDeux = self.CanvaUn.create_text(self.LargeurEcran/2-150+3, self.HauteurEcran/2+3, text= "Votre puissance : ", font=("OCR A Extended", 47), fill=couleur[1])
+		self.puissanceAlliéValeur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2+75, text=self.puissanceAllié, font=("OCR A Extended", 47), fill="black")
+		self.puissanceAlliéValeurDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+75+3, text=self.puissanceAllié, font=("OCR A Extended", 47), fill=couleur[1])
+		self.puissanceAlliéModificateur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2+150, text="Modificateur : " + str(self.facteurAllié), font=("OCR A Extended", 47), fill="black")
+		self.puissanceAlliéModificateurDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+150+3, text="Modificateur : " + str(self.facteurAllié), font=("OCR A Extended", 47), fill=couleur[1])
+
+		### Boutons ###
+		self.boutonAttaque = Button(self.EcranDeJeux, text="⚔️", font=("OCR A Extended", 25), bg='white', fg='black', command=boutonAttaqueFct, width=5, height=3)
+		self.boutonAttaque = self.CanvaUn.create_window((self.LargeurEcran/2)/2, self.HauteurEcran-100, window=self.boutonAttaque)
+		self.boutonHeal = Button(self.EcranDeJeux, text="❤️", font=("OCR A Extended", 25), bg='white', fg='black', command=boutonHealFct, width=5, height=3)
+		self.boutonHeal = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran-100, window=self.boutonHeal)
+		self.boutonRecherche = Button(self.EcranDeJeux, text="⚙️", font=("OCR A Extended", 25), bg='white', fg='black', command=boutonUpgradeFct, width=5, height=3)
+		self.boutonRecherche = self.CanvaUn.create_window((self.LargeurEcran)-(self.LargeurEcran/2)/2, self.HauteurEcran-100, window=self.boutonRecherche)
+
+	def pageVictoire(self) :
+		self.CanvaUn.delete(ALL)
+
+		### Image ###
+		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
+		self.imageWaifuMillitaire = PhotoImage(file="./waifu/waifuMilli.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2/2+50, self.HauteurEcran/2+100, image=self.imageWaifuMillitaire)
+
+		### Fonctions ###
+		self.argent += int(self.argent/10)
+		self.argentTotal += int(self.argent/10)
+
+		self.manche += 1
+
+		### Textes
+		self.texteVictoire = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Vous avez gagné !", font=("OCR A Extended", 47), fill="white")
+		self.texteVictoireDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-300+3, text= "Vous avez gagné !", font=("OCR A Extended", 47), fill="grey")
+		self.texteRécompense = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2, text= "Récompense : " + str(int(self.argent/10)) + "€", font=("OCR A Extended", 47), fill="white")
+		self.texteRécompenseDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+3, text= "Récompense : " + str(int(self.argent/10)) + "€", font=("OCR A Extended", 47), fill="red")
+
+		### Boutons ###
+		self.retourPageMillitaire = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
+		self.retourPageMillitaire = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+300, window=self.retourPageMillitaire)
+
+	def pageDéfaite(self) :
+		self.CanvaUn.delete(ALL)
+
+		### Image ###
+		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
+		self.imageWaifuMillitaire = PhotoImage(file="./waifu/waifuMilli.png")
+		self.CanvaUn.create_image(self.LargeurEcran/2/2+50, self.HauteurEcran/2+100, image=self.imageWaifuMillitaire)
+
+		self.texteVictoire = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Vous avez échoué !", font=("OCR A Extended", 47), fill="white")
+		self.texteVictoireDeux = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2-300+3, text= "Vous avez échoué !", font=("OCR A Extended", 47), fill="grey")
+
+		### Boutons ###
+		self.retourPageMillitaire = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
+		self.retourPageMillitaire = self.CanvaUn.create_window(self.LargeurEcran/2+(self.LargeurEcran/2/2), self.HauteurEcran/2+150, window=self.retourPageMillitaire)
 
 
 jeux = Jeux()
