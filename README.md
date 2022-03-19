@@ -24,6 +24,12 @@ Pour augmenter la puissance des personnages il faut aller dans la page du person
 J'ai ensuite ajouté une fenêtre pour l'attaque #5
 ![image](https://user-images.githubusercontent.com/98430140/159138142-b775f1be-353a-4666-8bd6-68787b979c2e.png)
 
+Et ajouté un système de combat (attaque, heal et upgrade les valeurs d'attaque et de heal) #5
+![image](https://user-images.githubusercontent.com/98430140/159141755-2d11d292-60f7-455d-8c0c-60c6b553ae11.png)
+
+Il y a 5 manches disponibles dans le jeu, chaque victoire augmente notre argent de 10%. Tous les personnages du jeu sont utilisables et améliorables dans ce nouveau mode. 
+
+Après la modification des différents personnages (ajout d'un système de niveau et de puissance) et l'ajout de variables dans notre système de sauvegarde, ceci conclue la partie militaire du projet.
 ## Partie quête/histoire
 
 
