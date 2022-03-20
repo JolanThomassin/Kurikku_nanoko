@@ -17,7 +17,7 @@ class Jeux() :
 
 		### Variables ###
 		self.InGame = False
-		self.argent = 500000
+		self.argent = 0
 		self.argentTotal = 0
 		
 		### Prix ###
@@ -39,7 +39,7 @@ class Jeux() :
 		### Waifu un ###
 		self.imageWaifuUnNoir = PhotoImage(file="waifu/waifuUnPetitNoir.png")
 		self.imageWaifuUnColor = PhotoImage(file="waifu/waifuUnPetitColor.png")
-		self.waifuUn = True
+		self.waifuUn = False
 		self.puissanceClique = 1
 		self.waifuUnNiveau = 1
 		self.waifuUnPrixNiveau = 5000
@@ -269,6 +269,20 @@ class Jeux() :
 			lignes[26] = str(self.codeDeux) + "\n"
 			lignes[27] = str(self.waifuDeux) + "\n"
 			lignes[28] = str(self.bonusWaifuDeux) + "\n"
+			lignes[29] = str(self.waifuUnNiveau) + "\n"
+			lignes[30] = str(self.waifuUnPrixNiveau) + "\n"
+			lignes[31] = str(self.waifuDeuxNiveau) + "\n"
+			lignes[32] = str(self.waifuDeuxPrixNiveau) + "\n"
+			lignes[33] = str(self.waifuCodeNiveau) + "\n"
+			lignes[34] = str(self.waifuCodePrixNiveau) + "\n"
+			lignes[35] = str(self.waifuUnPuissance) + "\n"
+			lignes[36] = str(self.waifuUnEquipé) + "\n"
+			lignes[37] = str(self.waifuDeuxPuissance) + "\n"
+			lignes[38] = str(self.waifuDeuxEquipé) + "\n"
+			lignes[39] = str(self.waifuCodePuissance) + "\n"
+			lignes[40] = str(self.waifuCodeEquipé) + "\n"
+			lignes[41] = str(self.manche) + "\n"
+
 		with open("sauvegarde.txt", "w") as fichier :
 			fichier.writelines(lignes)
 
@@ -403,6 +417,31 @@ class Jeux() :
 			else :
 				self.waifuDeux = True
 			self.bonusWaifuDeux = int(lignes[28])
+			self.waifuUnNiveau = int(lignes[29])
+			self.waifuUnPrixNiveau = int(lignes[30])
+			self.waifuDeuxNiveau = int(lignes[31])
+			self.waifuDeuxPrixNiveau = int(lignes[32])
+			self.waifuCodeNiveau = int(lignes[33])
+			self.waifuCodePrixNiveau = int(lignes[34])
+			self.waifuUnPuissance = int(lignes[35])
+			self.waifuUnEquipé = str(lignes[36])
+			if self.waifuUnEquipé == "False\n" :
+				self.waifuUnEquipé = False
+			else :
+				self.waifuUnEquipé = True
+			self.waifuDeuxPuissance = int(lignes[37])
+			self.waifuDeuxEquipé = str(lignes[38])
+			if self.waifuDeuxEquipé == "False\n" :
+				self.waifuDeuxEquipé = False
+			else :
+				self.waifuDeuxEquipé = True
+			self.waifuCodePuissance = int(lignes[39])
+			self.waifuCodeEquipé = str(lignes[40])
+			if self.waifuCodeEquipé == "False\n" :
+				self.waifuCodeEquipé = False
+			else :
+				self.waifuCodeEquipé = True
+			self.manche = int(lignes[41])
 
 		### Textes ###
 		self.ActualisationArgent()
@@ -1501,8 +1540,8 @@ class Jeux() :
 		self.boutonDroite = self.CanvaUn.create_window(self.LargeurEcran/2+500, self.HauteurEcran/2, window=self.boutonDroite)
 		
 		### Textes ###
-		self.nomWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-250, text= "Lyne", font=("OCR A Extended", 60), fill="white")
-		self.nomWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-250+3, text= "Lyne", font=("OCR A Extended", 60), fill="grey")
+		self.nomWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-250, text= "Elo", font=("OCR A Extended", 60), fill="white")
+		self.nomWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-250+3, text= "Elo", font=("OCR A Extended", 60), fill="grey")
 		self.equipeWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-150, text= "Équipé : " + str(self.waifuDeuxEquipé), font=("OCR A Extended", 30), fill="white")
 		self.equipeWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-150+3, text= "Équipé : " + str(self.waifuDeuxEquipé), font=("OCR A Extended", 30), fill="grey")
 		self.niveauWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-100, text= "Niveau : " + str(self.waifuDeuxNiveau), font=("OCR A Extended", 30), fill="white")
@@ -1545,8 +1584,8 @@ class Jeux() :
 		self.boutonDroite = self.CanvaUn.create_window(self.LargeurEcran/2+500, self.HauteurEcran/2, window=self.boutonDroite)
 		
 		### Textes ###
-		self.nomWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-250, text= "Lyne", font=("OCR A Extended", 60), fill="white")
-		self.nomWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-250+3, text= "Lyne", font=("OCR A Extended", 60), fill="grey")
+		self.nomWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-250, text= "Kimoko", font=("OCR A Extended", 60), fill="white")
+		self.nomWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-250+3, text= "Kimoko", font=("OCR A Extended", 60), fill="grey")
 		self.equipeWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-150, text= "Équipé : " + str(self.waifuCodeEquipé), font=("OCR A Extended", 30), fill="white")
 		self.equipeWaifuDeux = self.CanvaUn.create_text(self.LargeurEcran/2+200+3, self.HauteurEcran/2-150+3, text= "Équipé : " + str(self.waifuCodeEquipé), font=("OCR A Extended", 30), fill="grey")
 		self.niveauWaifu = self.CanvaUn.create_text(self.LargeurEcran/2+200, self.HauteurEcran/2-100, text= "Niveau : " + str(self.waifuCodeNiveau), font=("OCR A Extended", 30), fill="white")
