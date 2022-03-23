@@ -19,6 +19,7 @@ class Jeux() :
 		self.InGame = False
 		self.argent = 0
 		self.argentTotal = 0
+		self.niveauQuete = 0
 		
 		### Prix ###
 		self.weeb = 0
@@ -652,13 +653,59 @@ class Jeux() :
 		### Reset ###
 		self.CanvaUn.delete(ALL)
 
-		### Boutons ###
-		self.boutonRetour = Button(self.EcranDeJeux, text=" Retour ", font=("OCR A Extended", 20), bg='white', fg='black', command=self.MenuBoutiqueQuatrième)
-		self.boutonRetour = self.CanvaUn.create_window(self.LargeurEcran/2, 680, window=self.boutonRetour)
+		def vérificationQuete() :
+			limitation = False
+
+			if (self.niveauQuete == 0) and (limitation == False) :
+				if self.argentTotal >= 1000 :
+					limitation = True
+					self.niveauQuete = 1
+
+			if (self.niveauQuete == 1) and (limitation == False) :
+				if self.manche >= 1 :
+					limitation = True
+					self.niveauQuete = 2
+
+			if (self.niveauQuete == 2) and (limitation == False) :
+				if self.nombreWaifu >= 2 :
+					limitation = True
+					self.niveauQuete = 3
+
+			self.pageQuête()
+
+		def affichageQuete() :
+			if self.niveauQuete == 0 :
+				self.texteQueteActuelle = self.CanvaUn.create_text((self.LargeurEcran/2)+3, self.HauteurEcran/2-50+3, text= "Gagner 1.000$", font=("OCR A Extended", 45), fill="#FF14E6")
+				self.texteQueteActuelle = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-50, text= "Gagner 1.000$", font=("OCR A Extended", 45), fill="#FBFF0F")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+50+3, text= str(self.argentTotal) + " / 1.000", font=("OCR A Extended", 50), fill="#FF14E6")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2+50, text= str(self.argentTotal) + " / 1.000", font=("OCR A Extended", 50), fill="#FBFF0F")
+			if self.niveauQuete == 1 :
+				self.texteQueteActuelle = self.CanvaUn.create_text((self.LargeurEcran/2)+3, self.HauteurEcran/2-50+3, text= "Finir une manche millitaire", font=("OCR A Extended", 45), fill="#FF14E6")
+				self.texteQueteActuelle = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-50, text= "Finir une manche millitaire", font=("OCR A Extended", 45), fill="#FBFF0F")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+50+3, text= str(self.manche) + " / 1", font=("OCR A Extended", 45), fill="#FF14E6")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2+50, text= str(self.manche) + " / 1", font=("OCR A Extended", 45), fill="#FBFF0F")
+			if self.niveauQuete == 2 :
+				self.texteQueteActuelle = self.CanvaUn.create_text((self.LargeurEcran/2)+3, self.HauteurEcran/2-50+3, text= "Avoir au moins 2 waifu", font=("OCR A Extended", 45), fill="#FF14E6")
+				self.texteQueteActuelle = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-50, text= "Avoir au moins 2 waifu", font=("OCR A Extended", 45), fill="#FBFF0F")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+50+3, text= str(self.nombreWaifu) + " / 2", font=("OCR A Extended", 45), fill="#FF14E6")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2+50, text= str(self.nombreWaifu) + " / 2", font=("OCR A Extended", 45), fill="#FBFF0F")
+			if self.niveauQuete == 3 :
+				self.texteQueteActuelle = self.CanvaUn.create_text((self.LargeurEcran/2)+3, self.HauteurEcran/2-50+3, text= "Vous avez fini toutes les quêtes disponibles", font=("OCR A Extended", 25), fill="#FF14E6")
+				self.texteQueteActuelle = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-50, text= "Vous avez fini toutes les quêtes disponibles", font=("OCR A Extended", 25), fill="#FBFF0F")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2+3, self.HauteurEcran/2+50+3, text= "Suite bientôt disponible", font=("OCR A Extended", 30), fill="#FF14E6")
+				self.texteQueteActuelleValeur = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2+50, text= "Suite bientôt disponible", font=("OCR A Extended", 30), fill="#FBFF0F")
 
 		### Textes ###
-		self.texteQuête = self.CanvaUn.create_text((self.LargeurEcran/2)+3, (self.HauteurEcran/2)+3, text= "À venir", font=("OCR A Extended", 100), fill="#FF14E6")
-		self.texteQuêteDouble = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2, text= "À venir", font=("OCR A Extended", 100), fill="#FBFF0F")
+		affichageQuete()
+		self.texteNiveauQuete = self.CanvaUn.create_text((self.LargeurEcran/2)+3, self.HauteurEcran/2-300+3, text= "Niveau quête : " + str(self.niveauQuete), font=("OCR A Extended", 30), fill="#FF14E6")
+		self.texteNiveauQueteDeux = self.CanvaUn.create_text(self.LargeurEcran/2, self.HauteurEcran/2-300, text= "Niveau quête : " + str(self.niveauQuete), font=("OCR A Extended", 30), fill="#FBFF0F")
+
+		### Boutons ###
+		if self.niveauQuete != 3 :
+			self.boutonValider = Button(self.EcranDeJeux, text=" Valider quête ", font=("OCR A Extended", 20), bg='white', fg='black', command=vérificationQuete, width=20)
+			self.boutonValider = self.CanvaUn.create_window(self.LargeurEcran/2, 500, window=self.boutonValider)
+		self.boutonRetour = Button(self.EcranDeJeux, text=" Retour ", font=("OCR A Extended", 20), bg='white', fg='black', command=self.MenuBoutiqueQuatrième)
+		self.boutonRetour = self.CanvaUn.create_window(self.LargeurEcran/2, 680, window=self.boutonRetour)
 
 	def pageCode(self):
 		### Reset ###
@@ -670,6 +717,7 @@ class Jeux() :
 			if (code == "un code") and (self.codeUn == False) :
 				self.CanvaUn.itemconfigure(self.résultaCode, text="Vous êtes un petit rigolo (+1.000€)")
 				self.argent = self.argent + 1000
+				self.argentTotal = self.argentTotal + 1000
 				self.codeUn = True
 			if (code == "XBD") and (self.waifuCode == False) :
 				self.CanvaUn.itemconfigure(self.résultaCode, text="Vous avez débloqué : Kimoko")
@@ -684,6 +732,7 @@ class Jeux() :
 			if (code == "Caisse") and (self.codeDeux == False) :
 				self.CanvaUn.itemconfigure(self.résultaCode, text="Tirage ! (+5.000€)")
 				self.argent = self.argent + 5000
+				self.argentTotal = self.argentTotal + 5000
 				self.codeDeux = True
 
 		def entry_clear(e):
@@ -1672,15 +1721,12 @@ class Jeux() :
 		def boutonAttaqueFct() :
 			self.puissanceEnnemi -= self.facteurAllié
 			tourEnnemi()
-			vérificationVivant()
 		def boutonHealFct() :
 			self.puissanceAllié += self.facteurAllié
 			tourEnnemi()
-			vérificationVivant()
 		def boutonUpgradeFct() :
 			self.facteurAllié = self.facteurAllié + int(self.facteurAllié/4)
 			tourEnnemi()
-			vérificationVivant()
 
 		def tourEnnemi() :
 			valeurAleatoire = random.randint(0, 9)
@@ -1690,8 +1736,8 @@ class Jeux() :
 				self.puissanceEnnemi += self.facteurEnnemi
 			else :
 				self.facteurEnnemi = self.facteurEnnemi + int(self.facteurEnnemi/4)
-			vérificationVivant()
 			self.créationAttaque()
+			vérificationVivant()
 			
 		### Textes ###
 		couleur = couleurTexte()
@@ -1720,6 +1766,8 @@ class Jeux() :
 	def pageVictoire(self) :
 		self.CanvaUn.delete(ALL)
 
+		print(self.manche)
+
 		### Image ###
 		self.backgroundMillitaire = PhotoImage(file="salle/pageMillitaire.png")
 		self.CanvaUn.create_image(self.LargeurEcran/2, self.HauteurEcran/2, image=self.backgroundMillitaire)
@@ -1729,7 +1777,6 @@ class Jeux() :
 		### Fonctions ###
 		self.argent += int(self.argent/10)
 		self.argentTotal += int(self.argent/10)
-
 		self.manche += 1
 
 		### Textes
@@ -1741,6 +1788,8 @@ class Jeux() :
 		### Boutons ###
 		self.retourPageMillitaire = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageMillitaire, width=20)
 		self.retourPageMillitaire = self.CanvaUn.create_window(self.LargeurEcran/2, self.HauteurEcran/2+300, window=self.retourPageMillitaire)
+
+		print(self.manche)
 
 	def pageDéfaite(self) :
 		self.CanvaUn.delete(ALL)
