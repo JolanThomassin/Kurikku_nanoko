@@ -1,5 +1,5 @@
-0
-0
+1000
+1000
 0
 0
 False
@@ -22,7 +22,7 @@ False
 False
 5000
 False
-False
+True
 5
 False
 False
@@ -40,4 +40,5 @@ False
 150
 False
 0
+1
 

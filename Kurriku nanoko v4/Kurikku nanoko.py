@@ -283,6 +283,7 @@ class Jeux() :
 			lignes[39] = str(self.waifuCodePuissance) + "\n"
 			lignes[40] = str(self.waifuCodeEquipé) + "\n"
 			lignes[41] = str(self.manche) + "\n"
+			lignes[42] = str(self.niveauQuete) + "\n"
 
 		with open("sauvegarde.txt", "w") as fichier :
 			fichier.writelines(lignes)
@@ -443,6 +444,7 @@ class Jeux() :
 			else :
 				self.waifuCodeEquipé = True
 			self.manche = int(lignes[41])
+			self.niveauQuete = int(lignes[42])
 
 		### Textes ###
 		self.ActualisationArgent()
@@ -1507,7 +1509,7 @@ class Jeux() :
 		self.premierBouton = self.CanvaUn.create_window(self.LargeurEcran/2+(self.LargeurEcran/2/2), self.HauteurEcran/2-150, window=self.premierBouton)
 		self.deuxièmeBouton = Button(self.EcranDeJeux, text="Gérer équipe", font=("OCR A Extended", 25), bg='white', fg='black', command=self.pageGestionEquipeUne, width=20)
 		self.deuxièmeBouton = self.CanvaUn.create_window(self.LargeurEcran/2+(self.LargeurEcran/2/2), self.HauteurEcran/2-50, window=self.deuxièmeBouton)
-		self.quatrièmeBouton = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.FenetrePrincipale, width=20)
+		self.quatrièmeBouton = Button(self.EcranDeJeux, text="Retour", font=("OCR A Extended", 25), bg='white', fg='black', command=self.MenuBoutiqueQuatrième, width=20)
 		self.quatrièmeBouton = self.CanvaUn.create_window(self.LargeurEcran/2+(self.LargeurEcran/2/2), self.HauteurEcran/2+150, window=self.quatrièmeBouton)
 
 	def pageGestionEquipeUne(self) :
