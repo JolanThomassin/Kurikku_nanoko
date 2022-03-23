@@ -5,7 +5,7 @@ Dans cette maintenance j'ai décidé de finir mon clicker. Pour ceci j'ai deux p
 
 Premièrement, la partie militaire de mon jeu. Cette partie nécessite l'implémentation de plusieurs fenêtres, d'un ajout de niveau et de puissance sur tous les personnages du jeu et d'un système de combat.
 
-Deuxièmement, la partie des quêtes et de l'histoire. Je ne veux pas faire une histoire trop détaillée mais j'ai envie que l'utilisateur ressente une progression ou un but lors de son gameplay.
+Deuxièmement, la partie des quêtes. J'ai envie que l'utilisateur ressente une progression ou un but lors de son gameplay.
 
 Étant un vieux projet, pour arriver à réaliser cette maintenance je vais devoir modifier beaucoup d'ancien code et j'aimerais si possible avec le niveau que j'ai gagné en 5ans le rendre plus efficace et performant.
 
@@ -30,10 +30,13 @@ Et ajouté un système de combat (attaque, heal et upgrade les valeurs d'attaque
 Il y a 5 manches disponibles dans le jeu, chaque victoire augmente notre argent de 10%. Tous les personnages du jeu sont utilisables et améliorables dans ce nouveau mode. 
 
 Après la modification des différents personnages (ajout d'un système de niveau et de puissance) et l'ajout de variables dans notre système de sauvegarde, ceci conclue la partie militaire du projet.
-## Partie quête/histoire
 
+## Partie quête
+Pour la partie quête je vais simplement vérifier que certaines variables atteignent certaines valeurs, si c'est le cas, alors, le joueur débloquera la prochaine quête. Il y a actuellement 3 quête disponible. #7
+![image](https://user-images.githubusercontent.com/98430140/159807361-4a3026ef-9261-4797-96e2-7ea9f8e3cb7f.png)
 
-## Le jeu est codé en python et utilise principalement la bibliothèque Tkinter pour l'affichage.
+Ceci conclut la partie quête du projet, et donc cette maintenance.
+
 ## Vous pouvez :
  - Gagner de l'argent.
  - Acheter différentes ressources pour gagner plus d'argent.
@@ -42,3 +45,8 @@ Après la modification des différents personnages (ajout d'un système de nivea
  - Obtenir des waifus pour augmenter vos capacités.
  - Consulter vos statistiques.
  - Entrer des codes.
+ - Partir en guerre
+ - Compléter des quêtes
+___
+
+## Le jeu est codé en python et utilise principalement la bibliothèque Tkinter pour l'affichage.
